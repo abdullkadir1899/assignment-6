@@ -78,11 +78,7 @@ const loadCategory = () => {
     .then((d) => {
         console.log(d.categories)
         const categories = d.categories
-        categories.forEach((e) => {
-            categoryContainer.innerHTML += `
-            <li onclick="loadAllTrees()" id="all-Trees" class="p-2 rounded-lg hover:bg-[#15803d] cursor-pointer hover:text-white font-bold">${e.category_name}</li>
-            `
-        });
+        showCategory(categories)
 
     })
     .catch((er) => console.log(er))
@@ -90,10 +86,35 @@ const loadCategory = () => {
 
 
 
+const showCategory = (categories) => {
+    cardContainer.innerHTML = ''
+    categories.forEach((e) => {
+            categoryContainer.innerHTML += `
+            <li onclick="loadAllTrees()" id="all-Trees" class="p-2 rounded-lg hover:bg-[#15803d] cursor-pointer hover:text-white font-bold">${e.category_name}</li>
+            `
+        });
+
+        categoryContainer.addEventListener('click', (e) => {
+
+            const allLI =document.querySelectorAll('li')
+            
+            allLI.forEach(li => {
+                li.classList.remove('text-white', 'bg-[#15803d]')
+            })
+            
+           if(e.target.localName === 'li'){
+            console.log(e.target)
+            e.target.classList.add('text-white', 'bg-[#15803d]')
+           }
+        })
+}
+
+
+const loadCard = () => {
+    fetch(`https://openapi.programming-hero.com/api/category/${id}`)
+}
 
 
 
 loadCategory()
-
-
 loadAllTrees()
