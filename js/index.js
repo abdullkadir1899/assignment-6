@@ -1,88 +1,99 @@
-// category ID
+// main card container 
+const cardContainer = document.getElementById('plants-container')
+const modalContainer = document.getElementById('modal-container')
 const categoryContainer = document.getElementById('categoryContainer')
 
-// plants-container
-const plantsContainer = document.getElementById('plants-container')
 
 
 
-
-// categoryContainer
-const category = () => {
-  fetch("https://openapi.programming-hero.com/api/categories")
+//  all tree & modal
+const loadAllTrees = () => {
+    fetch('https://openapi.programming-hero.com/api/plants')
     .then((r) => r.json())
     .then((d) => {
-        // console.log(d.categories)
-        const categoriesItem = d.categories
-       showCategory(categoriesItem)
+        const data = d.plants;
+        cardContainer.innerHTML = ''
+
+        modalContainer.innerHTML= ''
+
+        data.forEach((e, index) => {
+            const modalId = `modal_${index}`
+               
+               
+            // cardContainer
+            cardContainer.innerHTML += `
+            <div class="card bg-base-100 w-96 h-[500px] shadow-sm">
+            <figure>
+                <img src="${e.image}">
+            </figure>
+            <div class="card-body">
+                <h2 onclick="document.getElementById('${modalId}').showModal()" class="card-title cursor-pointer">${e.name}</h2>
+                <P>${e.description}</P>
+                <ul class=" flex justify-between">
+                    <li><div class="badge badge-outline bg-[#dcfce7] border-none"> ${e.category}</div></li>
+                    <li><div  class="text-[#15803d] "> ৳ ${e.price}</div></li>
+                </ul>
+                <div class="card-actions justify-end">
+                    <button class="btn bg-[#15803d] w-full text-white rounded-full">Add to Cart</button>
+                </div>
+            </div>
+
+            </div>
+            `;
+
+
+
+            // modalContainer
+            modalContainer.innerHTML += `
+            <dialog id="${modalId}" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box">
+                <h3 class="text-lg font-extrabold mb-3">${e.name}</h3>
+                <img class="h-[300px] w-full rounded-xl" src="${e.image}"/>
+                <p class="mt-3">Category: ${e.category}</p>
+                <p class="mt-3">Price: ৳${e.price}</p>
+                <p class="py-4 font-bold">${e.description}</p>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <button class="btn">Close</button>
+                    </form>
+                    </div>
+            </div>
+            
+            </dialog>
+            `
+
+        })
     })
-    .catch((e) => console.log(e))
-};
+    .catch((er) => console.log(er))
+
+}
 
 
-// callBackFunction 1 to categoryContainer
-const showCategory = (categoriesItem) => {
-     categoriesItem.forEach((categories) => {
+
+
+// category
+const loadCategory = () => {
+    fetch('https://openapi.programming-hero.com/api/categories')
+    .then((r) => r.json())
+    .then((d) => {
+        console.log(d.categories)
+        const categories = d.categories
+        categories.forEach((e) => {
             categoryContainer.innerHTML += `
-                <li id="${categories.id}" class="p-2 rounded-lg hover:bg-[#15803d] cursor-pointer hover:text-white font-bold">${categories.category_name}</li>
+            <li onclick="loadAllTrees()" id="all-Trees" class="p-2 rounded-lg hover:bg-[#15803d] cursor-pointer hover:text-white font-bold">${e.category_name}</li>
             `
         });
 
-        categoryContainer.addEventListener('click', (p) => {
-
-            const allLI = document.querySelectorAll('li')
-            
-            if(p.target.localName === 'li'){
-                allLI.forEach(li => {
-                    li.classList.remove('bg-[#15803d]', 'text-white')
-                })
-
-                p.target.classList.add('bg-[#15803d]', 'text-white')
-                categoriesIdData(p.target.id)
-            }
-        })
-}
-
-// plants-container 
-const categoriesIdData = (treeId) => {
-    console.log(treeId)
-    fetch(`https://openapi.programming-hero.com/api/category/${treeId}`)
-    .then((r) => r.json())
-    .then((d) => {
-        showPlants(d.plants)
-
     })
-    .catch((error) => console.log(error))
+    .catch((er) => console.log(er))
 }
 
 
 
-// show plants-container  >> main container
-const showPlants = (tree) => {
-    plantsContainer.innerHTML = ''
-    tree.forEach((tree) => {
-        plantsContainer.innerHTML += `
-            <div class="card bg-base-100 w-96 h-[500px] shadow-sm">
-  <figure>
-    <img src="${tree.image}"  />
-  </figure>
-  <div class="card-body">
-    <h2 onclick="my_modal_5.showModal()" class="card-title">${tree.name}</h2>
-    <p>${tree.description}</p>
-
-    <ul class="flex justify-between">
-        <li><div class="badge badge-outline bg-[#dcfce7] text-[#15803d] font-bold">${tree.category}</div></li>
-        <li class="text-[#15803d]">${tree.price}</li>
-    </ul>
-    <div class="card-actions justify-end">
-      <button class="btn  bg-[#15803d] text-white w-full rounded-full">Add to Cart</button>
-    </div>
-  </div>
-    </div>
-        `
-    });
-}
 
 
 
-category()
+loadCategory()
+
+
+loadAllTrees()

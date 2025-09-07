@@ -69,6 +69,8 @@
         </div>
     </header>
 
+
+
     <main >
         <h1 class="pt-12 pb-7 text-center font-bold text-[32px]">Choose Your Trees</h1>
 
@@ -78,15 +80,14 @@
             <div class="w-[250px] h-[793px]  border-gray-300  ">
                 <h1 class="font-bold text-[20px]">Categories</h1>
                 <ul id="categoryContainer" class="pt-4">
-                    <li class="p-2 rounded-lg hover:bg-[#15803d] cursor-pointer hover:text-white font-bold">All Trees</li>
+                    <li onclick="loadAllTrees()" id="all-Trees" class="p-2 rounded-lg hover:bg-[#15803d] cursor-pointer hover:text-white font-bold">All Trees</li>
                     
                 </ul>
             </div>
 
             <!-- main card container -->
             <div id="plants-container" class="grid grid-cols-3  gap-5">
-
-
+ 
             </div>
 
             <!-- Yor cart shotori container -->
@@ -96,23 +97,17 @@
         </div>
     </main>
 
+
+
+
+
+
+
+
     <!-- modal -->
-     <!-- Open the modal using ID.showModal() method -->
-<!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+    <div id="modal-container">
 
-
-<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-  <div class="modal-box">
-    <h3 class="text-lg font-bold">Hello!</h3>
-    <p class="py-4">Press ESC key or click the button below to close</p>
-    <div class="modal-action">
-      <form method="dialog">
-        <!-- if there is a button in form, it will close the modal -->
-        <button class="btn">Close</button>
-      </form>
     </div>
-  </div>
-</dialog>
 
 
 
