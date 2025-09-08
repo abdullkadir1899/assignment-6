@@ -20,7 +20,7 @@ const loadAllTrees = () => {
 
         // cardContainer
         cardContainer.innerHTML += `
-            <div class="card bg-base-100 w-96 h-[500px] shadow-sm">
+            <div class="card bg-base-100 w-96 md:w-full h-[500px] shadow-sm">
             <figure>
                 <img src="${e.image}">
             </figure>
@@ -119,7 +119,7 @@ const showCategoryContainer = (ar) => {
 
     // card
     cardContainer.innerHTML += `
-        <div class="card bg-base-100  md:w-full h-[500px] shadow-sm">
+        <div class="card bg-base-100 w-96 md:w-full   h-[500px] shadow-sm">
            <figure>
                 <img src="${ele.image}">
             </figure>
