@@ -226,7 +226,7 @@ const updateCart = () => {
                 <p class="font-semibold">${item.name}</p>
                 <p class="text-sm text-gray-700">৳${item.price}  ${item.quantity}</p>
             </div>
-             <button onclick="removeFromCart('${item.id}')" class="text-red-500 font-bold">✖</button>
+             <button onclick="removeFromCart('${item.id}')" class="text-red-500 font-bold cursor-pointer">✖</button>
             </div>
             
         `
