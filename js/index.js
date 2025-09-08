@@ -5,6 +5,7 @@ const categoryContainer = document.getElementById("categoryContainer");
 
 //  all tree & modal
 const loadAllTrees = () => {
+    showSpinner()
   fetch("https://openapi.programming-hero.com/api/plants")
     .then((r) => r.json())
     .then((d) => {
@@ -56,6 +57,7 @@ const loadAllTrees = () => {
             </dialog>
             `;
       });
+      hiddenSpinner()
     })
     .catch((er) => console.log(er));
 };
@@ -96,10 +98,12 @@ const showCategory = (categories) => {
 
 const loadCard = (e) => {
   console.log(e);
+  showSpinner()
   fetch(`https://openapi.programming-hero.com/api/category/${e}`)
     .then((r) => r.json())
     .then((d) => {
       showCategoryContainer(d.plants);
+      hiddenSpinner()
     })
     .catch((err) => console.log(err));
 };
@@ -140,7 +144,7 @@ const showCategoryContainer = (ar) => {
 
 
 
-        
+
     // modal
     modalContainer.innerHTML += `
             <dialog id="${modalId}" class="modal modal-bottom sm:modal-middle">
@@ -159,6 +163,19 @@ const showCategoryContainer = (ar) => {
         `;
   });
 };
+
+
+// Spinner
+
+const showSpinner = () => {
+    document.getElementById('spinner').classList.remove('hidden')
+}
+
+const hiddenSpinner = () => {
+    document.getElementById('spinner').classList.add('hidden')
+}
+
+
 
 loadCategory();
 loadAllTrees();
