@@ -15,6 +15,7 @@ const loadAllTrees = () => {
       modalContainer.innerHTML = "";
 
       data.forEach((e, index) => {
+        
         const modalId = `modal_${index}`;
 
         // cardContainer
@@ -31,7 +32,7 @@ const loadAllTrees = () => {
                     <li><div  class="text-[#15803d] "> ৳ ${e.price}</div></li>
                 </ul>
                 <div class="card-actions justify-end">
-                    <button class="btn bg-[#15803d] w-full text-white rounded-full">Add to Cart</button>
+                    <button id="${e.id}" onclick="handleAddToCart('${e.id}', '${e.name}', ${e.price})"  class="btn bg-[#15803d]  w-full text-white rounded-full">add to card</button>
                 </div>
             </div>
 
@@ -134,7 +135,7 @@ const showCategoryContainer = (ar) => {
                         </li>
                     </ul>
                     <div class="card-actions justify-end">
-                        <button class="btn bg-[#15803d] w-full text-white rounded-full">Add to Cart</button>
+                        <button id="${ele.id}" onclick="handleAddToCart('${ele.id}', '${ele.name}', ${ele.price})"  class="btn bg-[#15803d] w-full text-white rounded-full">Add to Cart</button>
                     </div>
                 </div>            
         </div>
@@ -174,6 +175,89 @@ const showSpinner = () => {
 const hiddenSpinner = () => {
     document.getElementById('spinner').classList.add('hidden')
 }
+// end spinner
+
+
+
+
+
+
+
+
+
+
+
+
+// add to card > 
+
+let cart = []
+
+const addToCart = (item) => {
+    const found = cart.find(cartItem => cartItem.id === item.id);
+
+    if (found) {
+        found.quantity += 1;
+    } else {
+        cart.push({ ...item, quantity: 1 });
+    }
+
+    updateCart();
+};
+
+// updateCart right site
+const updateCart = () => {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalPriceEl = document.getElementById('total-price')
+
+
+    cartItemsContainer.innerHTML = '';
+
+    let total = 0
+
+
+    cart.forEach(item => {
+        const itemTotal = item.price *item.quantity;
+        total += itemTotal;
+
+
+        cartItemsContainer.innerHTML += `
+            <div class="bg-green-100 p-2 rounded flex justify-between items-center">
+            <div>
+                <p class="font-semibold">${item.name}</p>
+                <p class="text-sm text-gray-700">৳${item.price}  ${item.quantity}</p>
+            </div>
+             <button onclick="removeFromCart('${item.id}')" class="text-red-500 font-bold">✖</button>
+            </div>
+            
+        `
+    })
+
+
+
+    totalPriceEl.innerText = total;
+}
+
+
+// remove card X button 
+const removeFromCart = (id) => {
+    cart = cart.filter(item => item.id !== id);
+    updateCart()
+}
+
+
+
+
+// 
+const handleAddToCart =  (id, name, price) => {
+    addToCart({id, name, price})
+}
+
+
+
+
+
+
+
 
 
 
