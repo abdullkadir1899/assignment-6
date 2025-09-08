@@ -250,6 +250,7 @@ const removeFromCart = (id) => {
 // 
 const handleAddToCart =  (id, name, price) => {
     addToCart({id, name, price})
+    alert(`${name} card add `)
 }
 
 
